@@ -163,7 +163,7 @@ for nodeIndex = 1:3
     loadName  = strcat(matsFolder,'/centralHubs/centralHubAll_',...
                              sprintf('%02d',nodeIndex ),'_Mints_',nodeIDXu4,'.mat');
     load(loadName)
-    evalStr = strcat("mintsData_",nodeIDXu4,"=", "mintsDataPMAll;")
+    evalStr = strcat("mintsData_",nodeIDXu4,"=", "mintsDataPMAll;");
     eval(evalStr)
 end 
 
@@ -182,8 +182,33 @@ mintsData_001e06318c91.latitudeCoordinate(...
 
 mintsData_001e06318c91.longitudeCoordinate(...
     mintsData_001e06318c91.dateTime<datetime(2021,2,23,'timezone','utc')&...
-    mintsData_001e06318c91.dateTime>datetime(2021,2,3,'timezone','utc'),:)=-96.757776000000000;   
+    mintsData_001e06318c91.dateTime>datetime(2021,2,3,'timezone','utc'),:)=-96.757776000000000;
 
+
+%% Have to fix GPS Issues 
+mintsData_001e0637371e.latitudeCoordinate(...
+    mintsData_001e0637371e.dateTime<datetime(2020,9,28,'timezone','utc')&...
+    mintsData_001e0637371e.dateTime>datetime(2020,8,14,'timezone','utc'),:)=32.992193750000006;
+
+mintsData_001e0637371e.longitudeCoordinate(...
+    mintsData_001e0637371e.dateTime<datetime(2020,9,28,'timezone','utc')&...
+    mintsData_001e0637371e.dateTime>datetime(2020,8,14,'timezone','utc'),:)=-96.757776000000000;
+
+mintsData_001e0637371e.latitudeCoordinate(...
+    mintsData_001e0637371e.dateTime<datetime(2020,10,26,13,20,00,'timezone','utc')&...
+    mintsData_001e0637371e.dateTime>datetime(2020,10,03,00,30,00,'timezone','utc'),:)=32.992193750000006;   
+
+mintsData_001e0637371e.longitudeCoordinate(...
+    mintsData_001e0637371e.dateTime<datetime(2020,10,26,13,20,00,'timezone','utc')&...
+    mintsData_001e0637371e.dateTime>datetime(2020,10,03,00,30,00,'timezone','utc'),:)=-96.757776000000000;   
+
+mintsData_001e0637371e.latitudeCoordinate(...
+    mintsData_001e0637371e.dateTime<datetime(2021,2,27,'timezone','utc')&...
+    mintsData_001e0637371e.dateTime>datetime(2020,11,07,21,30,00,'timezone','utc'),:)=32.992193750000006;
+
+mintsData_001e0637371e.longitudeCoordinate(...
+    mintsData_001e0637371e.dateTime<datetime(2021,2,27,'timezone','utc')&...
+    mintsData_001e0637371e.dateTime>datetime(2020,11,07,21,30,00,'timezone','utc'),:)=-96.757776000000000;
 
 %% Clearing CN1 Variables 
 
@@ -195,31 +220,23 @@ mintsData_001e0637371e_WSTC = gpsCropCoord(mintsData_001e0637371e,32.992179,-96.
 mintsData_001e06318c91_Now      = removevars( mintsData_001e06318c91_WSTC,swappedVars);
 mintsData_001e0637371e_Kept     = mintsData_001e0637371e_WSTC(:,swappedVars);
 mintsData_001e06318c91_Analysis = synchronize(mintsData_001e06318c91_Now, mintsData_001e0637371e_Kept);
+
+% for wstc data only from CN3 PM Sensors 
+mintsData_001e06318c91_Analysis.latitudeCoordinate(...
+   mintsData_001e06318c91_Analysis.dateTime<datetime(2021,2,03,'timezone','utc')&...
+   mintsData_001e06318c91_Analysis.dateTime>datetime(2020,12,04,17,00,00,'timezone','utc'),:)=32.992193750000006;
+
+mintsData_001e06318c91_Analysis.longitudeCoordinate(...
+    mintsData_001e06318c91_Analysis.dateTime<datetime(2021,2,03,'timezone','utc')&...
+    mintsData_001e06318c91_Analysis.dateTime>datetime(2020,12,04,17,00,00,'timezone','utc'),:)=-96.757776000000000;
+
 mintsData_001e06318c91_Clean    = rmmissing(mintsData_001e06318c91_Analysis);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+for nodeIndex = 1:1
+    nodeIDXu4      = nodeIDs{nodeIndex}.nodeIDXu4;
+    saveName  = strcat(rawMatsFolder,'/centralNodes/centralNodesAnalisis_',...
+                             sprintf('%02d',nodeIndex ),'_Mints_',nodeIDXu4,'.mat');
+    folderCheck(saveName)
+    save(saveName,strcat("mintsData_",nodeIDXu4,"_Analysis"))
+end 
 

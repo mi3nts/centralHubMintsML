@@ -24,7 +24,7 @@ display("Raw DotMat Data Located @ :"+ rawMatsFolder)
 
 display(newline)
 
-syncFromCloudCN(nodeIDs,dataFolder,true,true,true);
+syncFromCloudCN(nodeIDs,dataFolder,true,false,false);
 
 
 for nodeIndex = 1:1
@@ -61,9 +61,9 @@ for nodeIndex = 1:1
         display("Saving UTD Nodes Data");
 
         concatStr  =  "mintsDataPMAll   = synchronize(";
-        for stackIndex = 1: length(inputStackPM) 
-            if(height(eval(strcat("mintsData",inputStackPM{stackIndex})))>2)
-                concatStr = strcat(concatStr,"mintsData",inputStackPM{stackIndex},",");
+        for stackIndex = 1: length(sensorStack) 
+            if(height(eval(strcat("mintsData",sensorStack{stackIndex})))>2)
+                concatStr = strcat(concatStr,"mintsData",sensorStack{stackIndex},",");
             end
         end
         concatStr  = strcat(concatStr,"'union');");   
@@ -88,8 +88,6 @@ for nodeIndex = 1:1
            display(strcat("No Data for UTD Nodes  Node: ", nodeID ))
         end    
 
-
-  
         clearvars -except dataFolder matsFolder ...
                    nodeIDs timeSpan ...
                    nodeIndex mintsDefinitions
