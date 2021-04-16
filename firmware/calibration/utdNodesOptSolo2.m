@@ -53,7 +53,7 @@ function [] = utdNodesOptSolo2(nodeIndex)
     limitsLow  ={ 0,  0,  0,  0,  0  , 0  ,0,  20, 10, .98};
     limitsHigh= {20, 40, 50, 60,  100, 500, 45,  75, 25,  .995};
 
-    versionStrTrain = ['UTD_Rsl_All_' datestr(today,'yyyy_mm_dd')];
+    versionStrTrain = ['UTD_Rsl_All_' datestr(now,'yyyy_mm_dd_HH_MM_SS')];
     versionStrMdl   = versionStrTrain;
     disp(versionStrMdl)
     display(newline)

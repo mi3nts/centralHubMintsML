@@ -27,48 +27,48 @@ display("Raw DotMat Data Located @ :"+ rawMatsFolder)
 
 display(newline)
 
-% syncFromCloudCN(nodeIDs,dataFolder,true,false,false);
+% syncFromCloudCN_from_LT(nodeIDs,dataFolder,true,false,false);
 % 
 % % Getting Raw Data
-% for nodeIndex = 1:3
-%     
-%     nodeIDXu4      = nodeIDs{nodeIndex}.nodeIDXu4;
-%     mintsDataBME280     =  getSyncedData(dataFolder,'/*/*/*/*/*/MINTS_',nodeIDXu4,'BME280',timeSpan);
-%     mintsDataOPCN3      =  getSyncedData(dataFolder,'/*/*/*/*/*/MINTS_',nodeIDXu4,'OPCN3',timeSpan);
-%     mintsDataGPSGPGGA2  =  getSyncedData(dataFolder,'/*/*/*/*/*/MINTS_',nodeIDXu4,'GPSGPGGA2',timeSpan);
-%     display("Data Files Recorded")
-%     
-%     %% Choosing Input Stack
-%     eval(strcat("inputStack = mintsDefinitions.inputStack",string(nodeIDs{nodeIndex}.inputStack),";"))
-%     eval(strcat("sensorStack = mintsDefinitions.sensorStack",string(nodeIDs{nodeIndex}.inputStack),";"))
-%     
-%     display("Saving Central Node Data");
-%     
-%     concatStr  =  "mintsDataPMAll   = synchronize(";
-%     for stackIndex = 1: length(sensorStack)
-%         if(height(eval(strcat("mintsData",sensorStack{stackIndex})))>2)
-%             concatStr = strcat(concatStr,"mintsData",sensorStack{stackIndex},",");
-%         end
-%     end
-%     concatStr  = strcat(concatStr,"'union');");
-%     display(concatStr)
-%     eval(concatStr)
-%     
-%     if(height(mintsDataPMAll) >0)
-%         display(strcat("Saving Central Hub Data for Node: ", nodeIDXu4));
-%         saveName  = strcat(matsFolder,'/centralHubs/centralHubPMAll_',...
-%             sprintf('%02d',nodeIndex ),'_Mints_',nodeIDXu4,'.mat');
-%         folderCheck(saveName);
-%         save(saveName,'mintsDataPMAll');
-%     else
-%         display(strcat("No Data for UTD Nodes  Node: ", nodeID ))
-%     end
-%     
-%     clearvars -except dataFolder matsFolder ...
-%         nodeIDs timeSpan ...
-%         nodeIndex mintsDefinitions
-%     
-% end
+ for nodeIndex = 1:3
+     
+     nodeIDXu4      = nodeIDs{nodeIndex}.nodeIDXu4;
+     mintsDataBME280     =  getSyncedData(dataFolder,'/*/*/*/*/*/MINTS_',nodeIDXu4,'BME280',timeSpan);
+     mintsDataOPCN3      =  getSyncedData(dataFolder,'/*/*/*/*/*/MINTS_',nodeIDXu4,'OPCN3',timeSpan);
+     mintsDataGPSGPGGA2  =  getSyncedData(dataFolder,'/*/*/*/*/*/MINTS_',nodeIDXu4,'GPSGPGGA2',timeSpan);
+     display("Data Files Recorded")
+     
+     %% Choosing Input Stack
+     eval(strcat("inputStack = mintsDefinitions.inputStack",string(nodeIDs{nodeIndex}.inputStack),";"))
+     eval(strcat("sensorStack = mintsDefinitions.sensorStack",string(nodeIDs{nodeIndex}.inputStack),";"))
+     
+     display("Saving Central Node Data");
+     
+     concatStr  =  "mintsDataPMAll   = synchronize(";
+     for stackIndex = 1: length(sensorStack)
+         if(height(eval(strcat("mintsData",sensorStack{stackIndex})))>2)
+             concatStr = strcat(concatStr,"mintsData",sensorStack{stackIndex},",");
+         end
+     end
+     concatStr  = strcat(concatStr,"'union');");
+     display(concatStr)
+     eval(concatStr)
+     
+     if(height(mintsDataPMAll) >0)
+         display(strcat("Saving Central Hub Data for Node: ", nodeIDXu4));
+         saveName  = strcat(matsFolder,'/centralHubs/centralHubPMAll_',...
+             sprintf('%02d',nodeIndex ),'_Mints_',nodeIDXu4,'.mat');
+         folderCheck(saveName);
+         save(saveName,'mintsDataPMAll');
+     else
+         display(strcat("No Data for UTD Nodes  Node: ", nodeID ))
+     end
+     
+     clearvars -except dataFolder matsFolder rawMatsFolder ...
+         nodeIDs timeSpan ...
+         nodeIndex mintsDefinitions
+     
+ end
 
 
 
@@ -159,7 +159,7 @@ mintsData_001e06318c91_Analysis = [mintsData_001e06318c91_Kept;mintsData_001e063
 
 for nodeIndex = 1:1
     nodeIDXu4      = nodeIDs{nodeIndex}.nodeIDXu4;
-    saveName  = strcat(rawMatsFolder,'/centralNodes/centralNodesAnalisis_',...
+    saveName  = strcat(rawMatsFolder,'/centralNodes/centralNodesAnalysis_',...
         sprintf('%02d',nodeIndex ),'_Mints_',nodeIDXu4,'.mat');
     folderCheck(saveName)
     save(saveName,strcat("mintsData_",nodeIDXu4,"_Analysis"))

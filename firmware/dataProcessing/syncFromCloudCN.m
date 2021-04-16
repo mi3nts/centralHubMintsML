@@ -15,7 +15,9 @@ function [] = syncFromCloudCN(nodeIDs,mintsDataFolder,xu4Sync,piSync,jetsonSync)
             folderCheck(strcat(mintsDataFolder,"/reference/",nodeIDXu4,"/"));
             system(strcat('rsync -avzrtu --exclude={"*.png","*.jpg"} -e "ssh -p 2222" mints@mintsdata.utdallas.edu:test/',...
                     nodeIDXu4,"/ ",mintsDataFolder,"/raw/",nodeIDXu4,"/"));    
-                
+ 
+           display(strcat('rsync -avzrtu --exclude={"*.png","*.jpg"} -e "ssh -p 2222" mints@mintsdata.utdallas.edu:raw/',...
+                    nodeIDXu4,"/ ",mintsDataFolder,"/raw/",nodeIDXu4,"/"))                
         end
         
         if(piSync & ~(nodeIDPi=="xxxxxxxxxxxx"))        
